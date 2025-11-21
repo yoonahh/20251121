@@ -4,6 +4,7 @@ This repository contains pricing utilities for plain-vanilla and custom options:
 
 - **Binomial CRR tree** for European calls/puts (`binomial_option.py`).
 - **Monte Carlo simulation with user-defined payoffs** (`monte_carlo_option.py`).
+- **Web UI for Monte Carlo pricing** (`web_option_server.py`).
 
 ## Binomial model usage
 
@@ -85,3 +86,20 @@ price = monte_carlo_price(
 )
 print(price)
 ```
+
+## Web-based Monte Carlo calculator
+
+Launch a lightweight Flask server that exposes a browser form for pricing with custom payoff expressions:
+
+```bash
+pip install flask
+python web_option_server.py
+```
+
+By default the server listens on `http://localhost:8000/price`. Fill in the inputs:
+
+- Spot, rate, volatility, maturity, steps, and number of simulation paths
+- Payoff expression using `S` (terminal price) or `path` (entire simulated path)
+- Optional RNG seed for reproducibility
+
+The page returns the estimated discounted price or a validation error. You can set alternative host/port values by modifying the `app.run` call in `web_option_server.py`.
